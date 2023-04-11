@@ -1,0 +1,13 @@
+.dragResize-wrap {
+}
+.dragResize-rotate {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border: 1px solid #333;
+  box-shadow: 0 0 2px #bbb;
+  cursor: pointer;
+  position: absolute;
+  top: -30px;
+  left: calc(50% - 4px);
+}
