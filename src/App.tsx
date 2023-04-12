@@ -9,8 +9,9 @@ function App() {
       width={800}
       height={800}
     >
-      <DR.Item></DR.Item>
+      <DR.Item id="11111"></DR.Item>
       <DR.Item
+        id="22222"
         width={100}
         height={100}
         x={200}

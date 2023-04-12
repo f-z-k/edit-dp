@@ -1,22 +1,22 @@
 import { useState } from 'react';
-import { IPropsBox } from './type';
+import { IPropsEdit, OnMove, CurrentItem } from './type';
 import GuideLine from './GuideLine';
 import { editContext } from './Context/EditContext';
 import { onMoveContext } from './Context/OnMoveContext';
-const Index = function (props: IPropsBox) {
+const Index = function (props: IPropsEdit) {
   let { width, height } = props;
   const [boundsEle, setBoundsEle] = useState<HTMLDivElement | null>(null);
-  const [itemEle, setItemEle] = useState<HTMLDivElement | null>(null);
-  const onMoveCb = (dom: HTMLDivElement) => {
-    setItemEle(dom)
+  const [currentItem, setCurrentItem] = useState<CurrentItem>();
+  const onMove: OnMove = (item) => {
+    setCurrentItem(item)
   }
   return <div style={{width, height}} ref={(ref) => {
     setBoundsEle(ref)
   }}>
     {
-      itemEle?<GuideLine width={width} height={height} itemEle={itemEle} />:null
+      <GuideLine width={width} height={height} currentItem={currentItem} />
     }
-    <onMoveContext.Provider value={onMoveCb}>
+    <onMoveContext.Provider value={onMove}>
       <editContext.Provider value={boundsEle}>
         {props.children}
       </editContext.Provider>

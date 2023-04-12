@@ -1,12 +1,11 @@
-export type IPropsBox = {
+export type IPropsEdit = {
   width: number;
   height: number;
   children: React.ReactNode
 }
 
-export type Direction = 'TOP_LEFT' | 'TOP_MIDDLE' | 'TOP_RIGHT' | 'MIDDLE_LEFT' | 'MIDDLE_RIGHT' | 'BOTTOM_LEFT' | 'BOTTOM_MIDDLE' | 'BOTTOM_RIGHT';
-
-export type IProps = {
+export type IPropsItem = {
+  id: string;
   enableDirection?: Array<Direction>;
   width?: number;
   height?: number;
@@ -15,6 +14,14 @@ export type IProps = {
   maxWidth?: number;
   maxHeight?: number
 }
+
+export type IPropsGuide = {
+  width: number;
+  height: number;
+  currentItem?: CurrentItem
+}
+
+export type Direction = 'TOP_LEFT' | 'TOP_MIDDLE' | 'TOP_RIGHT' | 'MIDDLE_LEFT' | 'MIDDLE_RIGHT' | 'BOTTOM_LEFT' | 'BOTTOM_MIDDLE' | 'BOTTOM_RIGHT';
 
 export type ActionType = 'MOVE' | 'RESIZE' | 'ROTATE' | '';
 
@@ -28,13 +35,12 @@ const baseStyle = {
   border: '1px solid #333',
   boxShadow: '0 0 2px #bbb',
 } as const;
+
 export const directionStyle: { [key in Direction]?: React.CSSProperties } = {
   TOP_LEFT: {
     ...baseStyle,
     top: '-5px',
     left: '-5px',
-    cursor: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(45deg);transform-origin: 16px 16px"></path></svg>')`,
-    // cursor: 'nw-resize'
   },
   TOP_MIDDLE: {
     ...baseStyle,
@@ -79,3 +85,13 @@ export const directionStyle: { [key in Direction]?: React.CSSProperties } = {
     cursor: 'se-resize'
   }
 };
+
+export type CurrentItem = {
+  id: string;
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
+
+export type OnMove = (item: CurrentItem) => void;

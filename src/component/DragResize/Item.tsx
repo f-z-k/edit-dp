@@ -2,11 +2,14 @@ import React, { useContext, useRef, useState } from 'react';
 import { editContext } from './Context/EditContext';
 import { onMoveContext } from './Context/OnMoveContext';
 import GuideLine from './GuideLine';
-import { directionStyle, Direction, IProps, ActionType, CursorType } from './type';
+import { directionStyle, Direction, IPropsItem, ActionType, CursorType } from './type';
 import { calculateCoordinateRad, radToAngle, calculateRotatedPointCoordinate, calculateGuide } from './tool';
 import './index.css';
-const Index = function (props: IProps) {
-  let { enableDirection = ['TOP_LEFT', 'TOP_MIDDLE', 'TOP_RIGHT', 'MIDDLE_LEFT', 'MIDDLE_RIGHT', 'BOTTOM_LEFT', 'BOTTOM_MIDDLE', 'BOTTOM_RIGHT'] } = props;
+const Index = function (props: IPropsItem) {
+  let {
+    enableDirection = ['TOP_LEFT', 'TOP_MIDDLE', 'TOP_RIGHT', 'MIDDLE_LEFT', 'MIDDLE_RIGHT', 'BOTTOM_LEFT', 'BOTTOM_MIDDLE', 'BOTTOM_RIGHT'],
+    id
+  } = props;
   let initEvent = useRef<React.MouseEvent>(); // 初始event
   let initDirection = useRef<Direction | string>(''); // 初始方向
   let actionType = useRef<ActionType>('');
@@ -92,10 +95,12 @@ const Index = function (props: IProps) {
       if (initDirection.current?.indexOf('RIGHT') > -1) {
         setWidth(Math.abs(newwidth));
       }
-    } else if (initEvent.current && !initDirection.current && actionType.current === 'MOVE' && dom.current) {
-      onMoveCb && onMoveCb(dom.current)
-      setPositionY(positionY + diffY);
-      setPositionX(positionX + diffX);
+    } else if (initEvent.current && !initDirection.current && actionType.current === 'MOVE') {
+      let _positionY = positionY + diffY;
+      let _positionX = positionX + diffX;
+      setPositionX(_positionX);
+      setPositionY(_positionY);
+      onMoveCb && onMoveCb({id, width, height, x: _positionX, y: _positionY})
     } else if (initEvent.current && !initDirection.current && actionType.current === 'ROTATE' && dom.current) {
       const startX = initEvent.current.clientX;
       const startY = initEvent.current.clientY;
@@ -153,6 +158,7 @@ const Index = function (props: IProps) {
   return (
     <div
       className="dragResize-item"
+      data-id={id}
       style={{
         width,
         height,

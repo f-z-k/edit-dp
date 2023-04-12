@@ -1,3 +1,3 @@
 import { createContext } from 'react';
-type cb = (dom: HTMLDivElement) => void;
-export const onMoveContext = createContext<cb | null>(null);
+import { OnMove } from './../type';
+export const onMoveContext = createContext<OnMove | null>(null);

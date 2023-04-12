@@ -1,6 +1,8 @@
-const Index = function (props: { itemEle: HTMLDivElement; width: number; height: number }) {
+import { IPropsGuide } from './type'
+const Index = function (props: IPropsGuide) {
+  let { width, height, currentItem } = props;
   return (
-    <div style={{ width: props.width, height: props.height, position: 'absolute' }}>
+    <div className='dr-guideLine' style={{ width, height, position: 'absolute' }}>
       <span></span>
     </div>
   );

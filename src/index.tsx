@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useRef, forwardRef, ForwardRefRenderFunction } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import BBB from './index1'
 import reportWebVitals from './reportWebVitals';
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const AA = forwardRef<HTMLDivElement, any>(function (props, ref) {
+  return <div ref={ref}>1</div>
+})
+const BB = function() {
+  const ref = useRef(null)
+  return <div>
+    <AA ref={ref}/>
+  </div>
+}
 root.render(
   <React.StrictMode>
     <div style={{padding: 50}}>
+      <BB />
+      {/* <BBB /> */}
       <App />
     </div>
   </React.StrictMode>
